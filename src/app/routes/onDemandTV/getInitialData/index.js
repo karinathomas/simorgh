@@ -1,4 +1,5 @@
 import pathOr from 'ramda/src/pathOr';
+import pipe from 'ramda/src/pipe';
 import fetchPageData from '../../utils/fetchPageData';
 import overrideRendererOnTest from '../../utils/overrideRendererOnTest';
 import getPlaceholderImageUrl from '../../utils/getPlaceholderImageUrl';
@@ -11,15 +12,21 @@ import nodeLogger from '#lib/logger.node';
 
 const logger = nodeLogger(__filename);
 
-const getEpisodeAvailability = ({ availableFrom, availableUntil, url }) => {
+const getEpisodeAvailability = ({ availableFrom, availableUntil }) => {
   const timeNow = Date.now();
   if (!availableUntil || timeNow < availableFrom) {
-    logger.info(TV_EPISODE_EXPIRED, {
-      url,
-    });
     return false;
   }
   return true;
+};
+
+const logEpisodeAvailability = (available, url) => {
+  if (!available) {
+    logger.info(TV_EPISODE_EXPIRED, {
+      url,
+    });
+  }
+  return available;
 };
 
 const getUrl = pageData =>
@@ -84,10 +91,11 @@ export default async ({ path: pathname }) => {
       masterBrand: get(['metadata', 'createdBy'], LOG_LEVELS.ERROR),
       episodeId: get(['content', 'blocks', 0, 'id'], LOG_LEVELS.ERROR),
       imageUrl: get(['content', 'blocks', 0, 'imageUrl']),
-      episodeIsAvailable: getEpisodeAvailability({
+      episodeIsAvailable: pipe(getEpisodeAvailability, available =>
+        logEpisodeAvailability(available, url),
+      )({
         availableFrom,
         availableUntil,
-        url,
       }),
     },
   };
