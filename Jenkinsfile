@@ -298,8 +298,6 @@ pipeline {
       script {
         getCommitInfo()
       }
-      // Clean the workspace
-      cleanWs()
     }
     aborted {
       script {
@@ -348,6 +346,10 @@ pipeline {
           notifySlack(messageParameters)
         }
       }
+    }
+    cleanup {
+      // Clean the workspace
+      cleanWs()
     }
   }
 }
