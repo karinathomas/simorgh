@@ -20,19 +20,20 @@ def setupCodeCoverage() {
   sh './cc-test-reporter before-build'
 }
 
-def runDevelopmentTests(){
+def installDependencies(){
   sh 'make install'
+}
+
+def runDevelopmentTests(){
   sh 'make developmentTests'
 }
 
 def runProductionTests(){
-  sh 'make install'
   sh 'make productionTests'
   sh 'npm prune --production'
 }
 
 def runChromaticTests(){
-  sh 'make install'
   sh 'make testChromatic'
 }
 
@@ -123,6 +124,18 @@ pipeline {
       }
       steps {
         cancelPreviousBuilds()
+      }
+    }
+    stage ('Install dependencies') {
+      agent {
+        docker {
+          image "${nodeImage}"
+          args '-u root -v /etc/pki:/certs'
+          reuseNode true
+        }
+      }
+      steps {
+        installDependencies()
       }
     }
     stage ('Build and Test') {
@@ -235,7 +248,6 @@ pipeline {
           }
           steps {
             sh "rm -f storybook.zip"
-            sh 'make install'
             sh 'make buildStorybook'
             zip archive: true, dir: 'storybook_dist', glob: '', zipFile: storybookDist
             stash name: 'simorgh_storybook', includes: storybookDist
@@ -250,8 +262,6 @@ pipeline {
             }
           }
           steps {
-            sh 'make install'
-
             buildStaticAssets("test", "TEST")
             buildStaticAssets("live", "LIVE")
           }
