@@ -136,6 +136,7 @@ pipeline {
             docker {
               image "${nodeImage}"
               args '-u root -v /etc/pki:/certs'
+              reuseNode true
             }
           }
           steps {
@@ -147,6 +148,7 @@ pipeline {
             docker {
               image "${nodeImage}"
               args '-u root -v /etc/pki:/certs'
+              reuseNode true
             }
           }
           steps {
@@ -158,6 +160,7 @@ pipeline {
             docker {
               image "${nodeImage}"
               args '-u root -v /etc/pki:/certs'
+              reuseNode true
             }
           }
           steps {
@@ -185,6 +188,7 @@ pipeline {
             docker {
               image "${nodeImage}"
               args '-u root -v /etc/pki:/certs'
+              reuseNode true
             }
           }
           steps {
@@ -196,6 +200,7 @@ pipeline {
             docker {
               image "${nodeImage}"
               args '-u root -v /etc/pki:/certs'
+              reuseNode true
             }
           }
           steps {
@@ -225,6 +230,7 @@ pipeline {
             docker {
               image "${nodeImage}"
               args '-u root -v /etc/pki:/certs'
+              reuseNode true
             }
           }
           steps {
@@ -240,6 +246,7 @@ pipeline {
             docker {
               image "${nodeImage}"
               args '-u root -v /etc/pki:/certs'
+              reuseNode true
             }
           }
           steps {
