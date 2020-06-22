@@ -24,6 +24,10 @@ def installDependencies(){
   sh 'make install'
 }
 
+def buildApplication(){
+  sh 'npm run build'
+}
+
 def runDevelopmentTests(){
   sh 'make developmentTests'
 }
@@ -126,7 +130,7 @@ pipeline {
         cancelPreviousBuilds()
       }
     }
-    stage ('Install dependencies') {
+    stage ('Install') {
       agent {
         docker {
           image "${nodeImage}"
@@ -136,6 +140,18 @@ pipeline {
       }
       steps {
         installDependencies()
+      }
+    }
+    stage ('Build') {
+      agent {
+        docker {
+          image "${nodeImage}"
+          args '-u root -v /etc/pki:/certs'
+          reuseNode true
+        }
+      }
+      steps {
+        buildApplication()
       }
     }
     stage ('Build and Test') {
