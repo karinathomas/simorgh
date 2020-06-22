@@ -391,6 +391,11 @@ pipeline {
     cleanup {
       // Clean the workspace
       cleanWs()
+
+      // Clean tmp directory
+      dir("${WORKSPACE}@tmp") {
+          deleteDir()
+      }
     }
   }
 }
