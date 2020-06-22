@@ -134,7 +134,6 @@ pipeline {
       agent {
         docker {
           image "${nodeImage}"
-          args '-v /etc/pki:/certs'
           reuseNode true
         }
       }
@@ -146,7 +145,6 @@ pipeline {
       agent {
         docker {
           image "${nodeImage}"
-          args '-v /etc/pki:/certs'
           reuseNode true
         }
       }
@@ -164,7 +162,6 @@ pipeline {
           agent {
             docker {
               image "${nodeImage}"
-              args '-v /etc/pki:/certs'
               reuseNode true
             }
           }
@@ -181,7 +178,6 @@ pipeline {
           agent {
             docker {
               image "${nodeImage}"
-              args '-v /etc/pki:/certs'
               reuseNode true
             }
           }
@@ -193,7 +189,6 @@ pipeline {
           agent {
             docker {
               image "${nodeImage}"
-              args '-v /etc/pki:/certs'
               reuseNode true
             }
           }
@@ -221,7 +216,6 @@ pipeline {
           agent {
             docker {
               image "${nodeImage}"
-              args '-v /etc/pki:/certs'
               reuseNode true
             }
           }
@@ -237,7 +231,6 @@ pipeline {
           agent {
             docker {
               image "${nodeImage}"
-              args '-v /etc/pki:/certs'
               reuseNode true
             }
           }
@@ -267,7 +260,6 @@ pipeline {
           agent {
             docker {
               image "${nodeImage}"
-              args '-v /etc/pki:/certs'
               reuseNode true
             }
           }
@@ -282,7 +274,6 @@ pipeline {
           agent {
             docker {
               image "${nodeImage}"
-              args '-v /etc/pki:/certs'
               reuseNode true
             }
           }
