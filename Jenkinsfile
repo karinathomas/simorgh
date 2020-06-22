@@ -210,7 +210,11 @@ pipeline {
             }
           }
           steps {
-            runDevelopmentTests()
+            setupCodeCoverage()
+            withCredentials([string(credentialsId: 'simorgh-cc-test-reporter-id', variable: 'CC_TEST_REPORTER_ID')]) {
+              runDevelopmentTests()
+              sh './cc-test-reporter after-build -t lcov --debug --exit-code 0'
+            }
           }
         }
         stage ('Test Production and Zip Production') {
